@@ -1,0 +1,177 @@
+@charset "utf-8";
+//lessc main.less main.css
+body{
+	// background-color: red;
+}
+
+@test_width:300px;
+
+.box{
+	width: @test_width;
+	height: @test_width;
+	background-color: yellow;
+	.border;
+}
+
+//混合
+.border{
+	border:solid 5px pink;
+}
+
+.border_02(@border_width){
+	border:solid yellow @border_width;
+}
+
+//传入默认值
+.border_03(@border_width:10px){
+	border:solid yellow @border_width;
+}
+
+
+.test_mix_02{
+	.border_02(30px);
+}
+
+.test_mix_03{
+	.border_03();
+	color:red;
+}
+
+//混合的例子
+.border_radius(@radius:5px){
+	-webkit-border-radius:@radius;
+	-moz-border-radius:@radius;
+	border-radius:@radius;
+}
+
+.radius_test{
+	width: 100px;
+	height: 40px;
+	background-color: green;
+	.border_radius;
+}
+
+.sanjiao{
+	width: 0;
+	height: 0;
+	overflow: hidden; //IE6最小高度
+	border-width: 10px;
+	border-color: red transparent transparent transparent;// 画三角
+	//border-style: solid;
+	border-style: solid dashed dashed dashed;//dashed兼容IE6
+}
+
+//匹配模式
+.triangle(top,@w:5px,@c:#ccc){
+	border-width:@w;
+	border-color: transparent transparent @c transparent;
+	border-style: dashed dashed solid dashed;
+}
+
+.triangle(bottom,@w:5px,@c:#ccc){
+	border-width:@w;
+	border-color: @c transparent transparent transparent;
+	border-style: solid dashed dashed dashed;
+}
+
+//@_通用
+.triangle(@_,@w:5px,@c:#ccc){
+	width: 0;
+	height: 0;
+	overflow: hidden; //IE6最小高度
+}
+
+.sanjiao{
+	.triangle(top,20px,red);
+}
+
+@test_01:300px;
+//运算
+.box_02{
+	width: @test_01 + 20;
+	color:#ccc - 10;
+}
+
+//嵌套
+.list{
+	width: 600px;
+	margin:30px auto;
+	padding:0;
+	list-style: none;
+
+	li{
+		height: 30px;
+		line-height: 30px;
+		background-color: pink;
+		margin-bottom: 5px;
+		padding: 0 10px;
+	}
+	a{
+		float: left;
+		// &代表上一层选择器
+		&:hover{
+    	color:red;
+  		}
+	}
+	span{
+		float: right;
+	}
+}
+
+//@arguments 引入所有的参数
+.border_arg(@w:30px, @c:red, @xx:solid){
+	border: @arguments;
+}
+
+.test_arg{
+	.border_arg(40px)
+}
+
+
+//避免编译
+.test_03{
+	width: ~'calc(300px - 30)';
+}
+
+//important 优先级最高
+.test_important{
+	.border_radius() !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
